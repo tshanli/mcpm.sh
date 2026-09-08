@@ -99,6 +99,8 @@ MCPM 将支持为以下客户端管理 MCP 服务器：
 - 🦢 Goose
 - 🔥 5ire
 - 🦘 Roo Code
+- 💻 OpenCode
+- 🚀 Antigravity (Google)
 - ✨ 更多客户端即将推出...
 
 ## 🔥 命令行界面 (CLI)

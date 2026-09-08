@@ -10,6 +10,7 @@ from mcpm.clients.base import BaseClientManager
 from mcpm.clients.client_config import ClientConfigManager
 
 # Import all client managers
+from mcpm.clients.managers.antigravity import AntigravityManager
 from mcpm.clients.managers.claude_code import ClaudeCodeManager
 from mcpm.clients.managers.claude_desktop import ClaudeDesktopManager
 from mcpm.clients.managers.cline import ClineManager, RooCodeManager
@@ -54,6 +55,7 @@ class ClientRegistry:
         "codex-cli": CodexCliManager,
         "opencode": OpenCodeManager,
         "qwen-cli": QwenCliManager,
+        "antigravity": AntigravityManager,
     }
 
     @classmethod
@@ -70,6 +72,8 @@ class ClientRegistry:
         Returns:
             BaseClientManager: Client manager instance or None if not found
         """
+        if client_name == "agy":
+            client_name = "antigravity"
         manager_class = cls._CLIENT_MANAGERS.get(client_name)
         if manager_class:
             return manager_class(config_path_override=config_path_override)
@@ -106,6 +110,8 @@ class ClientRegistry:
         Returns:
             Dict containing display name, download URL, and config path
         """
+        if client_name == "agy":
+            client_name = "antigravity"
         client_manager = cls.get_client_manager(client_name)
         if client_manager:
             return client_manager.get_client_info()
