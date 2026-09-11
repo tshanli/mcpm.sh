@@ -153,7 +153,7 @@ class MCPMAuthMiddleware(Middleware):
             try:
                 from fastmcp.server.dependencies import get_http_headers
 
-                headers = get_http_headers()
+                headers = get_http_headers(include={"authorization"})
                 auth_header = headers.get("authorization") or headers.get("Authorization")
             except (RuntimeError, ImportError):
                 pass

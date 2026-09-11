@@ -19,15 +19,15 @@ class TestFastMCPProxy:
         )
 
         factory = MCPMProxyFactory()
-        with patch("mcpm.fastmcp_integration.proxy.FastMCP") as mock_fastmcp:
+        with patch("mcpm.fastmcp_integration.proxy.create_proxy") as mock_create_proxy:
             mock_proxy = Mock()
-            mock_fastmcp.as_proxy.return_value = mock_proxy
+            mock_create_proxy.return_value = mock_proxy
 
             await factory.create_proxy_for_servers([server], "test")
 
             # Verify the proxy config
-            mock_fastmcp.as_proxy.assert_called_once()
-            config = mock_fastmcp.as_proxy.call_args[0][0]
+            mock_create_proxy.assert_called_once()
+            config = mock_create_proxy.call_args[0][0]
 
             assert hasattr(config, "mcpServers")
             assert "test-stdio" in config.mcpServers
@@ -46,14 +46,14 @@ class TestFastMCPProxy:
         )
 
         factory = MCPMProxyFactory()
-        with patch("mcpm.fastmcp_integration.proxy.FastMCP") as mock_fastmcp:
+        with patch("mcpm.fastmcp_integration.proxy.create_proxy") as mock_create_proxy:
             mock_proxy = Mock()
-            mock_fastmcp.as_proxy.return_value = mock_proxy
+            mock_create_proxy.return_value = mock_proxy
 
             await factory.create_proxy_for_servers([server], "test")
 
             # Verify the proxy config
-            config = mock_fastmcp.as_proxy.call_args[0][0]
+            config = mock_create_proxy.call_args[0][0]
 
             assert "test-remote" in config.mcpServers
             server_config = config.mcpServers["test-remote"]
@@ -88,14 +88,14 @@ class TestFastMCPProxy:
         ]
 
         factory = MCPMProxyFactory()
-        with patch("mcpm.fastmcp_integration.proxy.FastMCP") as mock_fastmcp:
+        with patch("mcpm.fastmcp_integration.proxy.create_proxy") as mock_create_proxy:
             mock_proxy = Mock()
-            mock_fastmcp.as_proxy.return_value = mock_proxy
+            mock_create_proxy.return_value = mock_proxy
 
             await factory.create_proxy_for_servers(servers, "mixed")
 
             # Verify only standard servers are in the config (CustomServerConfig is skipped)
-            config = mock_fastmcp.as_proxy.call_args[0][0]
+            config = mock_create_proxy.call_args[0][0]
 
             assert len(config.mcpServers) == 2  # Only stdio and http servers
             assert "stdio-server" in config.mcpServers
@@ -115,10 +115,10 @@ class TestFastMCPProxy:
         # Create factory with auth enabled
         factory = MCPMProxyFactory(auth_enabled=True, api_key="secret")
 
-        with patch("mcpm.fastmcp_integration.proxy.FastMCP") as mock_fastmcp:
+        with patch("mcpm.fastmcp_integration.proxy.create_proxy") as mock_create_proxy:
             mock_proxy = Mock()
             mock_proxy.add_middleware = Mock()
-            mock_fastmcp.as_proxy.return_value = mock_proxy
+            mock_create_proxy.return_value = mock_proxy
 
             # Create proxy in stdio mode (default)
             await factory.create_proxy_for_servers([server], stdio_mode=True)
@@ -135,10 +135,10 @@ class TestFastMCPProxy:
         # Create factory with auth enabled
         factory = MCPMProxyFactory(auth_enabled=True, api_key="secret")
 
-        with patch("mcpm.fastmcp_integration.proxy.FastMCP") as mock_fastmcp:
+        with patch("mcpm.fastmcp_integration.proxy.create_proxy") as mock_create_proxy:
             mock_proxy = Mock()
             mock_proxy.add_middleware = Mock()
-            mock_fastmcp.as_proxy.return_value = mock_proxy
+            mock_create_proxy.return_value = mock_proxy
 
             # Create proxy in HTTP mode
             await factory.create_proxy_for_servers([server], stdio_mode=False)

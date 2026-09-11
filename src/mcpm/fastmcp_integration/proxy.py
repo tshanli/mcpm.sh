@@ -7,6 +7,7 @@ from typing import Dict, List, Optional
 
 from fastmcp import FastMCP
 from fastmcp.mcp_config import MCPConfig, RemoteMCPServer, StdioMCPServer
+from fastmcp.server import create_proxy
 
 from mcpm.core.schema import CustomServerConfig, RemoteServerConfig, ServerConfig, STDIOServerConfig
 from mcpm.monitor.base import AccessMonitor, SessionTransport
@@ -112,7 +113,7 @@ class MCPMProxyFactory:
         # Create the proxy configuration dictionary directly
         proxy_config = MCPConfig(mcpServers=server_configs)
 
-        proxy = FastMCP.as_proxy(proxy_config, name=name or "mcpm-aggregated")
+        proxy = create_proxy(proxy_config, name=name or "mcpm-aggregated")
 
         # Add MCPM middleware
         # For single server proxies, use the server name for tracking
