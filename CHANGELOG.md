@@ -1,3 +1,14 @@
+## 2.16.0 - 2026-09-11
+
+### Features
+
+- Add Google Antigravity client support, including JSONC configuration, native server disable state, and the `agy` alias.
+
+### Fixes
+
+- Eliminate Authlib deprecation warnings by upgrading FastMCP and its authentication dependencies.
+- Preserve API-key authentication with FastMCP's updated header filtering.
+
 # [2.15.0](https://github.com/pathintegral-institute/mcpm.sh/compare/v2.14.0...v2.15.0) (2026-05-22)
 
 
